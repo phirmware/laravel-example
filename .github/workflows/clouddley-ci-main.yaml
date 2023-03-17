@@ -19,6 +19,10 @@ jobs:
         steps:
             - name: checkout
               uses: actions/checkout@v3
+            - name: Create cache directory
+              run: mkdir -p /root/.cache/docker
+            - name: Change ownership of cache directory
+              run: chown ${{ runner.user }} /root/.cache/docker
             - name: Cache Docker layers
               uses: actions/cache@v2
               with:
@@ -42,7 +46,6 @@ jobs:
               id: build_image
               run: |-
                 docker build -f Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-                sudo chown -R $USER:$USER /root/.cache/docker
                 docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
                 BUILD_IMAGE=$( echo "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" | base64 -w0 )
                 echo "::add-mask::$BUILD_IMAGE"

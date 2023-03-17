@@ -20,9 +20,9 @@ jobs:
             - name: checkout
               uses: actions/checkout@v3
             - name: Create cache directory
-              run: mkdir -p /root/.cache/docker
+              run:  sudo mkdir -p /root/.cache/docker
             - name: Change ownership of cache directory
-              run: chown ${{ runner.user }} /root/.cache/docker
+              run:  sudo chown ${{ runner.user }} /root/.cache/docker
             - name: Cache Docker layers
               uses: actions/cache@v2
               with:

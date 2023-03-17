@@ -22,7 +22,7 @@ jobs:
             - name: Create cache directory
               run:  sudo mkdir -p /root/.cache/docker
             - name: Change ownership of cache directory
-              run:  sudo chown ${{ runner.user }} /root/.cache/docker
+              run:  sudo chown -R $USER:$USER /root/.cache/docker
             - name: Cache Docker layers
               uses: actions/cache@v2
               with:

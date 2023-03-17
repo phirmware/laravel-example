@@ -55,7 +55,7 @@ RUN mkdir /var/log/php
 RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
 
 # Deployment steps
-composer config http-basic.nova.laravel.com ${{secrets.NOVA_USERNAME}} ${{secrets.NOVA_PASSWORD}}
+# composer config http-basic.nova.laravel.com ${{secrets.NOVA_USERNAME}} ${{secrets.NOVA_PASSWORD}}
 RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs
 RUN chmod +x /var/www/docker/run.sh
 

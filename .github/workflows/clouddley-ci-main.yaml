@@ -20,10 +20,10 @@ jobs:
             - name: checkout
               uses: actions/checkout@v3
             - name: Create cache directory
-              run:  sudo mkdir -p /root/.cache/docker
+              run: mkdir -p ~/.cache/docker
 
             - name: Change ownership of cache directory
-              run:  sudo chown -R $USER:$USER /root/.cache/docker
+              run: chown -R $USER:$USER ~/.cache/docker
 
             - name: Cache Docker layers
               uses: actions/cache@v3
@@ -32,12 +32,12 @@ jobs:
                 key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
                 restore-keys: ${{ runner.os }}-docker-
 
-            - name: Cache Composer dependencies
-              uses: actions/cache@v3
+            - name: Cache Docker layers
+              uses: actions/cache@v2
               with:
-                path: /var/www/vendor
-                key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                restore-keys: ${{ runner.os }}-composer-
+                path: ~/.cache/docker
+                key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+                restore-keys: ${{ runner.os }}-docker-
 
             - name: Configure AWS credentials
               uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3

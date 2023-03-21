@@ -22,8 +22,6 @@ jobs:
             - name: Create cache directory
               run: mkdir -p ~/.cache/docker
 
-            - name: Change ownership of cache directory
-              run: chown -R $USER:$USER ~/.cache/docker
 
             - name: Cache Docker layers
               uses: actions/cache@v3

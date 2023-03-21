@@ -19,15 +19,7 @@ jobs:
         steps:
             - name: checkout
               uses: actions/checkout@v3
-            - name: Create cache directory
-              run: mkdir -p ~/.cache/docker
 
-            - name: Cache Docker layers
-              uses: actions/cache@v2
-              with:
-                path: ~/.cache/docker
-                key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
-                restore-keys: ${{ runner.os }}-docker-
 
             - name: Configure AWS credentials
               uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
@@ -38,6 +30,11 @@ jobs:
             - name: Login to Amazon ECR
               uses: aws-actions/amazon-ecr-login@aaf69d68aa3fb14c1d5a6be9ac61fe15b48453a2
               id: login-ecr
+
+            - uses: satackey/action-docker-layer-caching@v0.0.11
+                # Ignore the failure of a step and avoid terminating the job.
+              continue-on-error: true
+
             - name: Build, tag, and push image to Amazon ECR
               env:
                 ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}

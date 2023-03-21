@@ -22,14 +22,6 @@ jobs:
             - name: Create cache directory
               run: mkdir -p ~/.cache/docker
 
-
-            - name: Cache Docker layers
-              uses: actions/cache@v3
-              with:
-                path: /root/.cache/docker
-                key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
-                restore-keys: ${{ runner.os }}-docker-
-
             - name: Cache Docker layers
               uses: actions/cache@v2
               with:
